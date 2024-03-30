@@ -1,0 +1,79 @@
+BranchOfficeRouter#show runnin
+Building configuration...
+
+Current configuration : 897 bytes
+!
+version 15.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname BranchOfficeRouter
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0/0
+ description "Active Router Link from Branch Office Router G0/0/0 to ISP Router G0/0/0"
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/1
+ description "Active Router Link from Branch Office Router G0/0/1 to S5 G0/1"
+ no ip address
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+banner motd ^CKaelan Baker Networking Capstone - ITAS Networking III - Here's hoping everything works. - You're on the Branch Office Router^C
+!
+!
+!
+!
+line con 0
+ logging synchronous
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end

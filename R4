@@ -1,0 +1,109 @@
+R4#show run
+Building configuration...
+
+Current configuration : 1471 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname R4
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2901/K9 sn FTX1524GR67-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ description "Active Router Link from R4 G0/0 to S4 G0/1"
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0.3
+ encapsulation dot1Q 3
+ ip address 203.0.0.4 255.255.255.0
+ standby version 2
+ standby 3 ip 203.0.0.1
+ standby 1 preempt
+!
+interface GigabitEthernet0/0.4
+ encapsulation dot1Q 4
+ ip address 204.0.0.4 255.255.255.0
+ standby 4 ip 204.0.0.1
+ standby 4 priority 110
+ standby 4 preempt
+ standby 2 preempt
+!
+interface GigabitEthernet0/0.99
+ encapsulation dot1Q 99
+ no ip address
+!
+interface GigabitEthernet0/1
+ description "Active Router Link from R4 G0/1 to R2 G0/1"
+ ip address 200.0.0.154 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ log-adjacency-changes
+ network 192.168.1.0 0.0.0.255 area 0
+ network 203.0.0.0 0.0.0.255 area 0
+ network 204.0.0.0 0.0.0.255 area 0
+ network 200.0.0.152 0.0.0.3 area 0
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+banner motd ^CKaelan Baker Networking Capstone - ITAS Networking III - Here's hoping everything works. - You're on R4^C
+!
+!
+!
+!
+line con 0
+ logging synchronous
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end

@@ -1,0 +1,114 @@
+R2#show run
+Building configuration...
+
+Current configuration : 1701 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname R2
+!
+!
+!
+!
+ip dhcp excluded-address 203.0.0.1 203.0.0.10
+ip dhcp excluded-address 204.0.0.1 204.0.0.10
+!
+ip dhcp pool VLAN3
+ network 203.0.0.0 255.255.255.0
+ default-router 203.0.0.1
+ip dhcp pool VLAN4
+ network 204.0.0.0 255.255.255.0
+ default-router 204.0.0.1
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2901/K9 sn FTX1524Z25L-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface Loopback1
+ no ip address
+!
+interface GigabitEthernet0/0
+ description "Active Router Link from R2 G0/0 to R3 G0/1"
+ ip address 200.0.0.149 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ description "Active Router Link from R2 G0/1 to R4 G0/1"
+ ip address 200.0.0.153 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface Serial0/0/0
+ description "Active Router Link from R2 S0/0/0 to R1 S0/1/0"
+ no ip address
+!
+interface Serial0/0/1
+ no ip address
+ clock rate 2000000
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ log-adjacency-changes
+ passive-interface default
+ no passive-interface Loopback1
+ network 203.0.0.0 0.0.0.255 area 0
+ network 204.0.0.0 0.0.0.255 area 0
+ default-information originate
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+access-list 101 permit ip 203.0.0.0 0.0.0.255 any
+access-list 101 permit ip 204.0.0.0 0.0.0.255 any
+access-list 101 permit icmp any any
+!
+banner motd ^CKaelan Baker Networking Capstone - ITAS Networking III - Here's hoping everything works. - You're on R2^C
+!
+!
+!
+!
+line con 0
+ logging synchronous
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end

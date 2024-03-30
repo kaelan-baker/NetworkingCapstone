@@ -1,0 +1,110 @@
+R3#show run
+Building configuration...
+
+Current configuration : 1410 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname R3
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2901/K9 sn FTX1524U34Y-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ description "Active Router Link from R3 G0/0 to S3 G0/1"
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0.3
+ encapsulation dot1Q 3
+ ip address 203.0.0.3 255.255.255.0
+ standby version 2
+ standby 3 ip 203.0.0.1
+ standby 3 priority 110
+ standby 3 preempt
+ standby 1 preempt
+ standby preempt
+!
+interface GigabitEthernet0/0.4
+ encapsulation dot1Q 4
+ ip address 204.0.0.3 255.255.255.0
+ standby version 2
+ standby 4 ip 204.0.0.1
+ standby 2 preempt
+!
+interface GigabitEthernet0/0.99
+ encapsulation dot1Q 99
+ no ip address
+!
+interface GigabitEthernet0/1
+ description "Active Router Link from R3 G0/1 to R2 G0/0"
+ ip address 200.0.0.150 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ log-adjacency-changes
+ network 200.0.0.148 0.0.0.3 area 0
+!
+router rip
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+banner motd ^CKaelan Baker Networking Capstone - ITAS Networking III - Here's hoping everything works. - You're on R3^C
+!
+!
+!
+!
+line con 0
+ logging synchronous
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end

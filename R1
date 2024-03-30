@@ -1,0 +1,88 @@
+R1#show run
+Building configuration...
+
+Current configuration : 996 bytes
+!
+version 15.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname R1
+!
+!
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0/0
+ description "Active Router Link from R1 G0/0/0 to S1 G0/1"
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/1/0
+ description "Active Router Link from R1 S0/1/0 to R2 S0/0/0"
+ no ip address
+ clock rate 2000000
+!
+interface Serial0/1/1
+ description "Active Router Link from R1 S0/1/1 to ISP Router S0/1/1"
+ no ip address
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+banner motd ^CKaelan Baker Networking Capstone - ITAS Networking III - Here's hoping everything works. - You're on R1^C
+!
+!
+!
+!
+line con 0
+ logging synchronous
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end

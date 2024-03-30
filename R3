@@ -82,7 +82,10 @@ interface Vlan1
 !
 router ospf 1
  log-adjacency-changes
+
  network 200.0.0.148 0.0.0.3 area 0
+ network 203.0.0.0 0.0.0.255 area 0
+ network 204.0.0.0 0.0.0.255 area 0
 !
 router rip
 !

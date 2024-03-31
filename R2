@@ -5,7 +5,7 @@ Building configuration...
 R2#show run
 Building configuration...
 
-Current configuration : 1998 bytes
+Current configuration : 2018 bytes
 !
 version 15.1
 no service timestamps log datetime msec
@@ -109,6 +109,7 @@ ip access-list extended ALLOW
  permit tcp 204.0.0.0 0.0.0.255 any established
  permit tcp host 202.0.0.11 any eq 22
  permit icmp any any
+ permit tcp any any
 !
 banner motd ^CKaelan Baker Networking Capstone - ITAS Networking III - Here's hoping everything works. - You're on R2^C
 !

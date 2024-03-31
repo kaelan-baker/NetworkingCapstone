@@ -1,7 +1,7 @@
 R1#show run
 Building configuration...
 
-Current configuration : 1393 bytes
+Current configuration : 1402 bytes
 !
 version 15.4
 no service timestamps log datetime msec
@@ -44,7 +44,7 @@ spanning-tree mode pvst
 !
 interface GigabitEthernet0/0/0
  description "Active Router Link from R1 G0/0/0 to S1 G0/1"
- no ip address
+ ip address 202.0.0.1 255.255.255.0
  duplex auto
  speed auto
 !
@@ -77,10 +77,10 @@ ip flow-export version 9
 !
 !
 ip access-list extended ACCESS_R2
- permit tcp any any established
+ permit icmp any any
  permit tcp any 202.0.0.0 0.0.0.255 eq smtp
  permit tcp any 202.0.0.0 0.0.0.255 eq 443
- permit icmp any any
+ permit tcp any any
 !
 banner motd ^CKaelan Baker Networking Capstone - ITAS Networking III - Here's hoping everything works. - You're on R1^C
 !

@@ -1,7 +1,7 @@
 R4#show run
 Building configuration...
 
-Current configuration : 1471 bytes
+Current configuration : 1550 bytes
 !
 version 15.1
 no service timestamps log datetime msec
@@ -52,21 +52,23 @@ interface GigabitEthernet0/0
 interface GigabitEthernet0/0.3
  encapsulation dot1Q 3
  ip address 203.0.0.4 255.255.255.0
+ ip helper-address 200.0.0.150
  standby version 2
- standby 3 ip 203.0.0.1
- standby 1 preempt
+ standby 1 ip 203.0.0.1
 !
 interface GigabitEthernet0/0.4
  encapsulation dot1Q 4
  ip address 204.0.0.4 255.255.255.0
- standby 4 ip 204.0.0.1
- standby 4 priority 110
- standby 4 preempt
- standby 2 preempt
+ ip helper-address 200.0.0.153
+ standby version 2
+ standby 1 ip 204.0.0.1
+ standby 1 priority 110
+ standby 1 preempt
 !
 interface GigabitEthernet0/0.99
  encapsulation dot1Q 99
  no ip address
+ standby version 2
 !
 interface GigabitEthernet0/1
  description "Active Router Link from R4 G0/1 to R2 G0/1"
@@ -79,11 +81,12 @@ interface Vlan1
  shutdown
 !
 router ospf 1
+ router-id 4.4.4.4
  log-adjacency-changes
- network 192.168.1.0 0.0.0.255 area 0
+ network 200.0.0.148 0.0.0.3 area 0
+ network 200.0.0.152 0.0.0.3 area 0
  network 203.0.0.0 0.0.0.255 area 0
  network 204.0.0.0 0.0.0.255 area 0
- network 200.0.0.152 0.0.0.3 area 0
 !
 ip classless
 !

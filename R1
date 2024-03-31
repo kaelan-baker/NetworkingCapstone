@@ -1,7 +1,7 @@
 R1#show run
 Building configuration...
 
-Current configuration : 996 bytes
+Current configuration : 1393 bytes
 !
 version 15.4
 no service timestamps log datetime msec
@@ -21,6 +21,9 @@ no ip cef
 no ipv6 cef
 !
 !
+!
+username R1 password 7 08314D5D1A0E0A0516
+username R2 password 7 08314D5D1A0E0A0516
 !
 !
 !
@@ -53,7 +56,10 @@ interface GigabitEthernet0/0/1
 !
 interface Serial0/1/0
  description "Active Router Link from R1 S0/1/0 to R2 S0/0/0"
- no ip address
+ ip address 200.0.0.145 255.255.255.252
+ encapsulation ppp
+ ppp authentication chap
+ ip access-group ACCESS_R2 in
  clock rate 2000000
 !
 interface Serial0/1/1
@@ -65,10 +71,16 @@ interface Vlan1
  shutdown
 !
 ip classless
+ip route 0.0.0.0 0.0.0.0 200.0.0.146 
 !
 ip flow-export version 9
 !
 !
+ip access-list extended ACCESS_R2
+ permit tcp any any established
+ permit tcp any 202.0.0.0 0.0.0.255 eq smtp
+ permit tcp any 202.0.0.0 0.0.0.255 eq 443
+ permit icmp any any
 !
 banner motd ^CKaelan Baker Networking Capstone - ITAS Networking III - Here's hoping everything works. - You're on R1^C
 !

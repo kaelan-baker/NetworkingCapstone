@@ -1,7 +1,7 @@
 S2#show run
 Building configuration...
 
-Current configuration : 4777 bytes
+Current configuration : 4351 bytes
 !
 version 15.0
 no service timestamps log datetime msec
@@ -15,9 +15,9 @@ hostname S2
 no ip domain-lookup
 !
 !
-ip dhcp snooping
+no ip dhcp snooping information option
 !
-spanning-tree mode rapid-pvst
+spanning-tree mode pvst
 spanning-tree portfast bpduguard default
 spanning-tree extend system-id
 spanning-tree vlan 1,99 priority 24576
@@ -118,7 +118,6 @@ interface FastEthernet0/16
 !
 interface FastEthernet0/17
  switchport trunk native vlan 99
- switchport trunk allowed vlan 1-4
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
@@ -126,7 +125,6 @@ interface FastEthernet0/17
 !
 interface FastEthernet0/18
  switchport trunk native vlan 99
- switchport trunk allowed vlan 1-4
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
@@ -134,7 +132,6 @@ interface FastEthernet0/18
 !
 interface FastEthernet0/19
  switchport trunk native vlan 99
- switchport trunk allowed vlan 1-4
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
@@ -142,7 +139,6 @@ interface FastEthernet0/19
 !
 interface FastEthernet0/20
  switchport trunk native vlan 99
- switchport trunk allowed vlan 1-4
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
@@ -150,7 +146,6 @@ interface FastEthernet0/20
 !
 interface FastEthernet0/21
  switchport trunk native vlan 99
- switchport trunk allowed vlan 1-4
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
@@ -158,7 +153,6 @@ interface FastEthernet0/21
 !
 interface FastEthernet0/22
  switchport trunk native vlan 99
- switchport trunk allowed vlan 1-4
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
@@ -166,7 +160,6 @@ interface FastEthernet0/22
 !
 interface FastEthernet0/23
  switchport trunk native vlan 99
- switchport trunk allowed vlan 1-4
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
@@ -174,7 +167,6 @@ interface FastEthernet0/23
 !
 interface FastEthernet0/24
  switchport trunk native vlan 99
- switchport trunk allowed vlan 1-4
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
@@ -182,24 +174,20 @@ interface FastEthernet0/24
 !
 interface GigabitEthernet0/1
  switchport access vlan 3
- switchport trunk allowed vlan 1-4
  switchport mode access
  switchport nonegotiate
  switchport port-security
  switchport port-security mac-address sticky 
- switchport port-security violation restrict 
  switchport port-security mac-address sticky 0001.9730.9B94
  spanning-tree portfast
  spanning-tree bpduguard enable
 !
 interface GigabitEthernet0/2
  switchport access vlan 4
- switchport trunk allowed vlan 1-4
  switchport mode access
  switchport nonegotiate
  switchport port-security
  switchport port-security mac-address sticky 
- switchport port-security violation restrict 
  switchport port-security mac-address sticky 0002.4A1B.DA08
  spanning-tree portfast
  spanning-tree bpduguard enable

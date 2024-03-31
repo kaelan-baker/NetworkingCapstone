@@ -1,7 +1,7 @@
 S4#show run
 Building configuration...
 
-Current configuration : 4244 bytes
+Current configuration : 4002 bytes
 !
 version 15.0
 no service timestamps log datetime msec
@@ -15,17 +15,16 @@ hostname S4
 no ip domain-lookup
 !
 !
+ip dhcp snooping vlan 3-4
+ip dhcp snooping information option allow-untrusted
+no ip dhcp snooping information option
 !
-spanning-tree mode rapid-pvst
+spanning-tree mode pvst
 spanning-tree portfast bpduguard default
 spanning-tree extend system-id
 spanning-tree vlan 4 priority 24576
-spanning-tree vlan 1,99 priority 28672
 !
 interface Port-channel1
- switchport trunk native vlan 99
- switchport mode trunk
- switchport nonegotiate
 !
 interface Port-channel2
  switchport trunk native vlan 99
@@ -154,50 +153,43 @@ interface FastEthernet0/20
 !
 interface FastEthernet0/21
  switchport trunk native vlan 99
- switchport trunk allowed vlan 1-4
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
- channel-group 1 mode on
+ channel-group 2 mode on
 !
 interface FastEthernet0/22
  switchport trunk native vlan 99
- switchport trunk allowed vlan 1-4
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
- channel-group 1 mode on
+ channel-group 2 mode on
 !
 interface FastEthernet0/23
  switchport trunk native vlan 99
- switchport trunk allowed vlan 1-4
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
- channel-group 1 mode on
+ channel-group 2 mode on
 !
 interface FastEthernet0/24
  switchport trunk native vlan 99
- switchport trunk allowed vlan 1-4
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
- channel-group 1 mode on
+ channel-group 2 mode on
 !
 interface GigabitEthernet0/1
  switchport trunk native vlan 99
- switchport trunk allowed vlan 99
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
 !
 interface GigabitEthernet0/2
  switchport trunk native vlan 99
- switchport trunk allowed vlan 1-4
  ip dhcp snooping trust
  switchport mode trunk
  switchport nonegotiate
- channel-group 2 mode on
 !
 interface Vlan1
  no ip address

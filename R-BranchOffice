@@ -1,7 +1,7 @@
-BranchOfficeRouter#show runnin
+BranchOfficeRouter#show run
 Building configuration...
 
-Current configuration : 897 bytes
+Current configuration : 1370 bytes
 !
 version 15.4
 no service timestamps log datetime msec
@@ -23,8 +23,21 @@ no ipv6 cef
 !
 !
 !
+crypto isakmp policy 10
+ encr aes
+ authentication pre-share
+ group 2
+!
+crypto isakmp key ipseckey address 80.10.10.9
 !
 !
+!
+crypto ipsec transform-set TS1 esp-aes esp-sha-hmac
+!
+crypto map VPN 10 ipsec-isakmp 
+ set peer 80.10.10.9
+ set transform-set TS1 
+ match address 100
 !
 !
 !
@@ -41,13 +54,14 @@ spanning-tree mode pvst
 !
 interface GigabitEthernet0/0/0
  description "Active Router Link from Branch Office Router G0/0/0 to ISP Router G0/0/0"
- no ip address
+ ip address 80.10.10.14 255.255.255.252
  duplex auto
  speed auto
+ crypto map VPN
 !
 interface GigabitEthernet0/0/1
  description "Active Router Link from Branch Office Router G0/0/1 to S5 G0/1"
- no ip address
+ ip address 192.168.10.1 255.255.255.0
  duplex auto
  speed auto
 !
@@ -55,11 +69,16 @@ interface Vlan1
  no ip address
  shutdown
 !
+router eigrp 100
+ network 192.168.10.0
+ network 80.10.10.12 0.0.0.3
+!
 ip classless
 !
 ip flow-export version 9
 !
 !
+access-list 100 permit ip 192.168.10.0 0.0.0.255 202.0.0.0 0.0.0.255
 !
 banner motd ^CKaelan Baker Networking Capstone - ITAS Networking III - Here's hoping everything works. - You're on the Branch Office Router^C
 !

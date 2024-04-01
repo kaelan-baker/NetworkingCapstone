@@ -1,7 +1,12 @@
+ISP>en
+ISP#copy run start
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
 ISP#show run
 Building configuration...
 
-Current configuration : 1005 bytes
+Current configuration : 1144 bytes
 !
 version 15.4
 no service timestamps log datetime msec
@@ -41,7 +46,7 @@ spanning-tree mode pvst
 !
 interface GigabitEthernet0/0/0
  description "Active Router Link from ISP Router G0/0/0 to Branch Office Router G0/0/0"
- no ip address
+ ip address 80.10.10.13 255.255.255.252
  duplex auto
  speed auto
 !
@@ -58,12 +63,18 @@ interface Serial0/1/0
 !
 interface Serial0/1/1
  description "Active Router Link from ISP Router S0/1/1 to R1 S0/1/1"
- no ip address
+ ip address 80.10.10.10 255.255.255.252
  clock rate 2000000
 !
 interface Vlan1
  no ip address
  shutdown
+!
+router eigrp 100
+ network 80.10.10.8 0.0.0.3
+ network 80.10.10.12 0.0.0.3
+!
+router rip
 !
 ip classless
 !
